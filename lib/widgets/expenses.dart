@@ -29,11 +29,21 @@ class _Expense extends State<Expense> {
         category: Category.travel,
         date: DateTime.now())
   ];
+  void _getModaloverlay() {
+    showModalBottomSheet(context: context, builder: (ctx) => const Text("his"));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: const Text("Welcome to ExpenseTracker"),
+          actions: [
+            IconButton(onPressed: _getModaloverlay, icon: const Icon(Icons.add))
+          ],
+        ),
         body: ExpensesList(
-      registeredExpenses: _registeredExpense,
-    ));
+          registeredExpenses: _registeredExpense,
+        ));
   }
 }
