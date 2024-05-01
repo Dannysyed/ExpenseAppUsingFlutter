@@ -17,6 +17,7 @@ class _NewExpense extends State<NewExpense> {
 
   final _amountController = TextEditingController();
   DateTime? _selectedDate;
+  Category _selectedCateogry = Category.leisure;
 
   @override
   void dispose() {
@@ -29,7 +30,6 @@ class _NewExpense extends State<NewExpense> {
     final firstDate = DateTime(now.year - 1, now.month, now.day);
     final pickedDate = await showDatePicker(
         context: context, firstDate: firstDate, lastDate: now);
-    print(pickedDate);
     setState(() {
       _selectedDate = pickedDate;
     });
@@ -76,11 +76,31 @@ class _NewExpense extends State<NewExpense> {
           ),
           Row(
             children: [
+              DropdownButton(
+                  value: _selectedCateogry,
+                  items: Category.values
+                      .map((catergory) => DropdownMenuItem(
+                            value: catergory,
+                            child: Text(catergory.name.toUpperCase()),
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    if (value == null) {
+                      return;
+                    }
+                    setState(() {
+                      _selectedCateogry = value;
+                    });
+                  }),
+              const Spacer(),
               TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
                   child: const Text("Cancel")),
+              const SizedBox(
+                width: 20,
+              ),
               ElevatedButton(
                   onPressed: () {
                     print(_entertitle);
